@@ -1,11 +1,10 @@
 import React from 'react';
 
 const GoodItem = (props) => {
-  const {mainId,displayName,displayDescription,price, displayAssets} = props
+  const {mainId,displayName,displayDescription,price, displayAssets, addToBucket} = props
   return (
     <div className="card" id={mainId}>
         <div className="card-image">
-
           <img src={displayAssets[0].full_background}/>
         </div>
         <div className="card-content">
@@ -13,7 +12,7 @@ const GoodItem = (props) => {
           <p>{displayDescription}</p>
         </div>
         <div className="card-action">
-          <button className="btn">Buy</button>
+          <button className="btn" onClick={()=>addToBucket(props)}>Buy</button>
           <span className="right">{price.regularPrice}$</span>
         </div>
     </div>
