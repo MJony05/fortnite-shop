@@ -50,7 +50,7 @@ export default function Shop() {
   const removeFromBasket = (itemId) => {
     const newOrder = order.filter(el=>el.mainId!==itemId)
     setOrder(newOrder)
-    toast.error('Deleted goods')
+    toast.error('Deleted successfully')
   }
   const incrementQuantity = (itemId) => {
     const newOrder = order.map(el=>{
