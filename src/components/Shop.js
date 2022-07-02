@@ -3,10 +3,13 @@ import {API_URL, API_KEY} from "../config";
 import Loader from "./Loader";
 import GoodList from "./GoodList";
 import Cart from "./Cart";
+import BasketList from "./BasketList";
+import {toast} from "react-toastify";
 export default function Shop() {
   const [goods, setGoods] = useState([])
   const [loading, setLoading] = useState(true)
   const [order, setOrder] = useState([])
+  const [showBucket, setShowBucket] = useState(false)
   useEffect(()=>{
     fetch(API_URL, {
     headers: {
@@ -20,7 +23,6 @@ export default function Shop() {
   const addToBucket = (item) => {
 
     const itemIndex =order.findIndex(orderItem => orderItem.mainId===item.mainId)
-console.log(itemIndex)
     if(itemIndex<0){
       const newItem = {
         ...item,
@@ -40,12 +42,47 @@ console.log(itemIndex)
       })
       setOrder(newOrder)
     }
-    console.log(order)
+    toast.success('Goods added to busket successfully')
+  }
+  const handleBucket = () => {
+    setShowBucket(!showBucket)
+  }
+  const removeFromBasket = (itemId) => {
+    const newOrder = order.filter(el=>el.mainId!==itemId)
+    setOrder(newOrder)
+    toast.error('Deleted goods')
+  }
+  const incrementQuantity = (itemId) => {
+    const newOrder = order.map(el=>{
+      if(el.mainId===itemId){
+        return {
+          ...el,
+          quantity: el.quantity+1
+        }
+      }else{
+        return el
+      }
+    })
+    setOrder(newOrder)
+  }
+  const decrementQuantity = (itemId) => {
+    const newOrder = order.map(el=>{
+      if(el.mainId===itemId){
+        return {
+          ...el,
+          quantity: el.quantity>0?el.quantity-1:0
+        }
+      }else{
+        return el
+      }
+    })
+    setOrder(newOrder)
   }
   return (
     <div className={'container content'}>
-      <Cart quantity={order.length}/>
+      <Cart quantity={order.length} showBucket={handleBucket}/>
       {loading?(<Loader/>):<GoodList goods ={goods} addToBucket={addToBucket}/>}
+      {showBucket && <BasketList order={order} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} removeFromBasket={removeFromBasket} showBusket={handleBucket}/>}
     </div>
   )
 }

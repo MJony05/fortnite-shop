@@ -24,3 +24,44 @@ nav{
         bottom:unset;
     }
 }
+
+.basket-list{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 50rem;
+    max-width: 95%;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    animation: show .5s ease-in-out;
+}
+.bsk{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+}
+.basket-close{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    cursor: pointer;
+    color: #fff;
+}
+.basket-delete{
+    cursor: pointer;
+}
+@keyframes show {
+    from{top:70%;opacity: 0}
+    to{top:50%;opacity:1}
+}
+.btnq{
+    position: relative;
+    bottom: 6px;
+}
+.rows{
+    margin-bottom: 1rem;
+}
